@@ -1,5 +1,9 @@
 name: github-action
-on: [push]
+on: 
+    workflow_dispatch:
+    push:
+        branches:
+            - 'main'
 jobs:
     test:
         runs-on: ubuntu-latest
@@ -7,4 +11,16 @@ jobs:
             - uses: actions/checkout@v5
             - name: install all
               run: npm install
+            - name: test everything
+              run: npm run test
+    build:
+        needs: test
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v5
+            - name: install dependencies
+              run: npm install
+            - name: build everything
+              run: npm run
+
 
